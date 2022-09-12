@@ -15,7 +15,7 @@ public class AddressBookMain {
 
         while (true) {
         	System.out.println("Enter Your Choice: ");
-            System.out.println("1-Add\n2-Display\n3-Edit\n4-Exit");
+            System.out.println("1-Add\n2-Display\n3-Edit\n4-Delete\n5-Exit");
             Scanner sc= new Scanner(System.in); 
 			char ch = sc.next().charAt(0);
 
@@ -25,15 +25,21 @@ public class AddressBookMain {
                     break;
                 case '2':
                 	Scanner search= new Scanner(System.in); 
-                	System.out.print("Search Name -: ");
+                	System.out.print("Search First Name -: ");
                 	String  n= search.nextLine();
                     ab.searchPerson(n);
                     break;
                 case '3':
                 	Scanner search2= new Scanner(System.in); 
-                	System.out.print("Search Name -: ");
+                	System.out.print("Search First Name -: ");
                 	String  n2= search2.nextLine();
                     ab.editPerson(n2);
+                    break;
+                case '4':
+                	Scanner search1= new Scanner(System.in); 
+                	System.out.print("Search First Name -: ");
+                	String  s1= search1.nextLine();
+                    ab.deletePerson(s1);
                     break;
                
                 case '5':;
@@ -67,7 +73,7 @@ class PersonInfo {
     }
   
 
-    // display on GUI
+   
     void display() {
     	System.out.println("First Name: "+FirstName +" Last Name: "+ LastName +" Address: "+ Address +" City: "+ City + "  State: "+ State +" Zip: "+ Zip + " Phone No: "+PhoneNumber +" Email: "+Email+"\n");
     }
@@ -81,7 +87,7 @@ class AddressBook {
         
     }
 
-    // adding a Person Object
+    
     void addPerson() {
     	System.out.println("-------------------------------------------------------------------------------------------------------------------------");
 		Scanner firstname= new Scanner(System.in); 
@@ -198,13 +204,13 @@ class AddressBook {
     }
 
     void searchPerson(String n) {
-    	System.out.println(n);
-    	System.out.println(persons.size());
         for (int i = 0; i < persons.size(); i++) {
             PersonInfo p = (PersonInfo) persons.get(i);
             if (n.equals(p.FirstName)) {
             	
                 p.display();
+            }else {
+            	System.out.println("--------------------Not Found In Records-----------------------");
             }
         }
     }
@@ -216,11 +222,11 @@ class AddressBook {
             PersonInfo p = (PersonInfo) persons.get(i);
             if (n.equals(p.FirstName)) {
                 persons.remove(i);
+                System.out.println("Contact First Name "+p.FirstName);
+                System.out.println("------------------Deleted---------------------");
             }
         }
     }
 }
-
-
 
 
