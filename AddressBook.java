@@ -138,7 +138,14 @@ class Contacts {
 		System.out.print("Enter Email Address -: ");
 		String Email = email.nextLine();
 		PersonInfo p = new PersonInfo(FirstName, LastName, Address, City, State, Zip, PhoneNumber, Email);
-		persons.add(p);
+		// Check Duplicate Entry using Stream
+		boolean checkRepeateEntry = persons.stream().anyMatch(y -> FirstName.equals(y.FirstName));
+		if (persons.size() == 0 || checkRepeateEntry == false) {
+			System.out.println("---Contact Added---");
+			persons.add(p);
+		} else {
+			System.out.println("Duplicate Entry");
+		}
 
 	}
 
