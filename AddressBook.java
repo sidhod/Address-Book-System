@@ -2,9 +2,9 @@ package addressBookMain;
 
 import java.util.*;
 
-public class AddressBookMain {
+public class AddressBook {
 	public static void main(String[] args) {
-		AddressBook ab = new AddressBook();
+		Contacts ab = new Contacts();
 		String input;
 		// Welcome message in address book
 		System.out.println("" + "    ##     ## ###### ##     ###### ###### ###   ### ######\r\n"
@@ -82,13 +82,23 @@ class PersonInfo {
 				+ "\n");
 	}
 
+	public String get() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public char[] get(int i) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
 
-class AddressBook {
-	ArrayList persons;
+class Contacts {
+	ArrayList<PersonInfo> persons;
 
-	AddressBook() {
-		persons = new ArrayList();
+	Contacts() {
+		persons = new ArrayList<PersonInfo>();
 
 	}
 
@@ -129,6 +139,7 @@ class AddressBook {
 		String Email = email.nextLine();
 		PersonInfo p = new PersonInfo(FirstName, LastName, Address, City, State, Zip, PhoneNumber, Email);
 		persons.add(p);
+
 	}
 
 	// edit Person
@@ -205,7 +216,6 @@ class AddressBook {
 					p.Email = email;
 					break;
 				case '9':
-					;
 					System.exit(0);
 
 				}
@@ -226,7 +236,7 @@ class AddressBook {
 		}
 	}
 
-	// Delete person metnod
+	// Delete person method
 	void deletePerson(String n) {
 
 		for (int i = 0; i < persons.size(); i++) {
