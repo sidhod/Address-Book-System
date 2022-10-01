@@ -2,10 +2,12 @@ package addressBookMain;
 
 import java.util.*;
 
+
 public class AddressBook {
 	public static void main(String[] args) {
+
+		
 		Contacts ab = new Contacts();
-		String input;
 		// Welcome message in address book
 		System.out.println("" + "    ##     ## ###### ##     ###### ###### ###   ### ######\r\n"
 				+ " *  ##     ## ##     ##     ##     ##  ## ## # # ## ##      *\r\n"
@@ -15,43 +17,46 @@ public class AddressBook {
 				+ "-------------------WELCOME TO ADDRESS BOOK-----------------------\r\n");
 		// loop for select choice
 		while (true) {
-			System.out.println("Enter Your Choice: ");
-			System.out.println("1-Add\n2-Display\n3-Edit\n4-Delete\n5-Exit");
 			Scanner sc = new Scanner(System.in);
-			char ch = sc.next().charAt(0);
-
-			switch (ch) {
+			System.out.println("Enter Your Choice: ");
+			System.out.println("1-Add\n2-Display\n3-Edit\n4-Delete\n5-Search By City\n6-Exit");
+			switch (sc.next().charAt(0)) {
 			case '1':
 				ab.addPerson();
 				break;
 			case '2':
-				Scanner search = new Scanner(System.in);
+
 				System.out.print("Search First Name -: ");
-				String n = search.nextLine();
-				ab.searchPerson(n);
+				String firstName1 = sc.next();
+				ab.searchPerson(firstName1);
 				break;
 			case '3':
-				Scanner search2 = new Scanner(System.in);
+
 				System.out.print("Search First Name -: ");
-				String n2 = search2.nextLine();
-				ab.editPerson(n2);
+				String firstName2 = sc.next();
+				ab.editPerson(firstName2);
 				break;
 			case '4':
-				Scanner search1 = new Scanner(System.in);
+
 				System.out.print("Search First Name -: ");
-				String s1 = search1.nextLine();
-				ab.deletePerson(s1);
+				String firstName3 = sc.next();
+				ab.deletePerson(firstName3);
+				break;
+			case '5':
+				System.out.print("Search By City -: ");
+				String city = sc.next();
+				ab.searchByCity(city);
 				break;
 
-			case '5':
-				;
-
+			case '6':
 				System.exit(0);
 			}
+			sc.close();
 
 		}
 
 	}
+
 }
 
 class PersonInfo {
@@ -82,19 +87,10 @@ class PersonInfo {
 				+ "\n");
 	}
 
-	public String get() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public char[] get(int i) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }
 
 class Contacts {
+
 	ArrayList<PersonInfo> persons;
 
 	Contacts() {
@@ -106,37 +102,30 @@ class Contacts {
 	void addPerson() {
 		System.out.println(
 				"-------------------------------------------------------------------------------------------------------------------------");
-		Scanner firstname = new Scanner(System.in);
-		System.out.print("Enter First Name -: ");
-		String FirstName = firstname.nextLine();
+		Scanner addInfo = new Scanner(System.in);
+	    System.out.print("Enter First Name -: ");
+		String FirstName = addInfo.next();
 
-		Scanner lastname = new Scanner(System.in);
 		System.out.print("Enter Last Name -: ");
-		String LastName = firstname.nextLine();
+		String LastName = addInfo.next();
 
-		Scanner address = new Scanner(System.in);
 		System.out.print("Enter Address -: ");
-		String Address = address.nextLine();
+		String Address = addInfo.next();
 
-		Scanner city = new Scanner(System.in);
 		System.out.print("Enter City -: ");
-		String City = city.nextLine();
+		String City = addInfo.next();
 
-		Scanner state = new Scanner(System.in);
 		System.out.print("Enter State -: ");
-		String State = city.nextLine();
+		String State = addInfo.next();
 
-		Scanner zip = new Scanner(System.in);
 		System.out.print("Enter Zip Code -: ");
-		String Zip = zip.nextLine();
+		String Zip = addInfo.next();
 
-		Scanner phonenumber = new Scanner(System.in);
 		System.out.print("Enter Phone Number -: ");
-		String PhoneNumber = phonenumber.nextLine();
+		String PhoneNumber = addInfo.next();
 
-		Scanner email = new Scanner(System.in);
 		System.out.print("Enter Email Address -: ");
-		String Email = email.nextLine();
+		String Email = addInfo.next();
 		PersonInfo p = new PersonInfo(FirstName, LastName, Address, City, State, Zip, PhoneNumber, Email);
 		// Check Duplicate Entry using Stream
 		boolean checkRepeateEntry = persons.stream().anyMatch(y -> FirstName.equals(y.FirstName));
@@ -146,86 +135,79 @@ class Contacts {
 		} else {
 			System.out.println("Duplicate Entry");
 		}
+		addInfo.close();
 
 	}
 
 	// edit Person
 	void editPerson(String n) {
+		Scanner edit = new Scanner(System.in);
 		System.out.println(n);
 		System.out.println(persons.size());
 		for (int i = 0; i < persons.size(); i++) {
 			PersonInfo p = (PersonInfo) persons.get(i);
 			if (n.equals(p.FirstName)) {
-				String temp;
 				System.out.println("Enter Your ChoiceFor edit : ");
 				System.out.println(
 						"1-First Name\n2-Last Name\n3-Address\n4-City\n5-State\n6-Zip\n7-Phone Number\n8-Email\n9-Exit");
-				Scanner sc2022 = new Scanner(System.in);
-				char ch = sc2022.next().charAt(0);
+				char ch = edit.next().charAt(0);
 
 				switch (ch) {
 				case '1':
 					System.out.println("Old name: " + p.FirstName);
-					Scanner fname = new Scanner(System.in);
 					System.out.print("Enter new first name -: ");
-					String firstname = fname.nextLine();
+					String firstname = edit.next();
 					p.FirstName = firstname;
 
 					break;
 				case '2':
 					System.out.println("Old name: " + p.LastName);
-					Scanner lname = new Scanner(System.in);
 					System.out.print("Enter new last name -: ");
-					String lastname = lname.nextLine();
+					String lastname = edit.next();
 					p.LastName = lastname;
 
 					break;
 				case '3':
 					System.out.println("Old address: " + p.Address);
-					Scanner address1 = new Scanner(System.in);
 					System.out.print("Enter new address -: ");
-					String address = address1.nextLine();
+					String address = edit.next();
 					p.Address = address;
 					break;
 				case '4':
 					System.out.println("Old city" + p.City);
-					Scanner city1 = new Scanner(System.in);
 					System.out.print("Enter new first name -: ");
-					String city = city1.nextLine();
+					String city = edit.nextLine();
 					p.City = city;
 					break;
 				case '5':
 					System.out.println("Old state: " + p.State);
-					Scanner state1 = new Scanner(System.in);
 					System.out.print("Enter new first name -: ");
-					String state = state1.nextLine();
+					String state = edit.nextLine();
 					p.Address = state;
 					break;
 				case '6':
 					System.out.println("Old zip " + p.Zip);
-					Scanner zip1 = new Scanner(System.in);
 					System.out.print("Enter new first name -: ");
-					String zip = zip1.nextLine();
+					String zip = edit.nextLine();
 					p.Zip = zip;
 					break;
 				case '7':
 					System.out.println("Old phone number: " + p.PhoneNumber);
-					Scanner phonenumber1 = new Scanner(System.in);
 					System.out.print("Enter new first name -: ");
-					String phonenumber = phonenumber1.nextLine();
+					String phonenumber = edit.nextLine();
 					p.PhoneNumber = phonenumber;
 					break;
 				case '8':
 					System.out.println("Old email: " + p.Email);
-					Scanner email1 = new Scanner(System.in);
 					System.out.print("Enter new first name -: ");
-					String email = email1.nextLine();
+					String email = edit.next();
 					p.Email = email;
 					break;
 				case '9':
 					System.exit(0);
 
 				}
+				edit.close();
 			}
 		}
 	}
@@ -255,4 +237,10 @@ class Contacts {
 			}
 		}
 	}
+
+	// Search Person By City
+	void searchByCity(String city) {
+		persons.stream().filter(y -> city.equals(y.City)).forEach(y -> y.display());
+	}
+
 }
