@@ -18,7 +18,7 @@ public class AddressBook {
 		while (true) {
 			Scanner sc = new Scanner(System.in);
 			System.out.println("Enter Your Choice: ");
-			System.out.println("1-Add\n2-Display\n3-Edit\n4-Delete\n5-Search By City\n6-Search By State\n7-Exit");
+			System.out.println("1-Add\n2-Display\n3-Edit\n4-Delete\n5-Count Person By City\n6-Count Person By State\n7-Exit");
 			char input = sc.nextLine().charAt(0);
 			switch (input) {
 			case '1':
@@ -241,14 +241,18 @@ class Contacts {
 		}
 	}
 
-	// Search Person By City
+	// Count Person who having Same City
 	void searchByCity(String city) {
-		persons.stream().filter(y -> city.equals(y.City)).forEach(y -> y.display());
+		long countOfContacts=persons.stream()
+				.filter(y -> city.equals(y.City)).count();
+		System.out.println("Count Of Person Having Same City: "+countOfContacts);
 	}
 
-	// Search Person By State
+	// Count Person who having Same State
 	void searchBystate(String state) {
-		persons.stream().filter(y -> state.equals(y.State)).forEach(y -> y.display());
+		long countOfContacts=persons.stream()
+				.filter(y -> state.equals(y.State)).count();
+		System.out.println("Count Of Person Having Same State: "+countOfContacts);
 	}
 
 }
