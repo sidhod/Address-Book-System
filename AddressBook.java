@@ -1,5 +1,6 @@
 package addressBookMain;
 
+import java.util.Comparator;
 import java.util.*;
 
 public class AddressBook {
@@ -18,7 +19,8 @@ public class AddressBook {
 		while (true) {
 			Scanner sc = new Scanner(System.in);
 			System.out.println("Enter Your Choice: ");
-			System.out.println("1-Add\n2-Display\n3-Edit\n4-Delete\n5-Count Person By City\n6-Count Person By State\n7-Exit");
+			System.out.println(
+					"1-Add\n2-Display\n3-Edit\n4-Delete\n5-Count Person By City\n6-Count Person By State\n7-Sorted By Name\n8-Exit");
 			char input = sc.nextLine().charAt(0);
 			switch (input) {
 			case '1':
@@ -52,8 +54,11 @@ public class AddressBook {
 				String state = sc.nextLine();
 				ab.searchByCity(state);
 				break;
-
 			case '7':
+				ab.sortByFirstName();
+				break;
+
+			case '8':
 				System.exit(0);
 			}
 
@@ -243,16 +248,20 @@ class Contacts {
 
 	// Count Person who having Same City
 	void searchByCity(String city) {
-		long countOfContacts=persons.stream()
-				.filter(y -> city.equals(y.City)).count();
-		System.out.println("Count Of Person Having Same City: "+countOfContacts);
+		long countOfContacts = persons.stream().filter(y -> city.equals(y.City)).count();
+		System.out.println("Count Of Person Having Same City: " + countOfContacts);
 	}
 
 	// Count Person who having Same State
 	void searchBystate(String state) {
-		long countOfContacts=persons.stream()
-				.filter(y -> state.equals(y.State)).count();
-		System.out.println("Count Of Person Having Same State: "+countOfContacts);
+		long countOfContacts = persons.stream().filter(y -> state.equals(y.State)).count();
+		System.out.println("Count Of Person Having Same State: " + countOfContacts);
+	}
+
+	// Sort Contacts In AddressBook By Name
+	void sortByFirstName() {
+		System.out.println("Sorted Contacts In Address Book By Name");
+		persons.stream().sorted((p1, p2) -> p1.FirstName.compareTo(p2.FirstName)).forEach(y -> y.display());
 	}
 
 }
