@@ -2,11 +2,10 @@ package addressBookMain;
 
 import java.util.*;
 
-
 public class AddressBook {
+
 	public static void main(String[] args) {
 
-		
 		Contacts ab = new Contacts();
 		// Welcome message in address book
 		System.out.println("" + "    ##     ## ###### ##     ###### ###### ###   ### ######\r\n"
@@ -19,39 +18,44 @@ public class AddressBook {
 		while (true) {
 			Scanner sc = new Scanner(System.in);
 			System.out.println("Enter Your Choice: ");
-			System.out.println("1-Add\n2-Display\n3-Edit\n4-Delete\n5-Search By City\n6-Exit");
-			switch (sc.next().charAt(0)) {
+			System.out.println("1-Add\n2-Display\n3-Edit\n4-Delete\n5-Search By City\n6-Search By State\n7-Exit");
+			char input = sc.nextLine().charAt(0);
+			switch (input) {
 			case '1':
 				ab.addPerson();
 				break;
 			case '2':
 
 				System.out.print("Search First Name -: ");
-				String firstName1 = sc.next();
+				String firstName1 = sc.nextLine();
 				ab.searchPerson(firstName1);
 				break;
 			case '3':
 
 				System.out.print("Search First Name -: ");
-				String firstName2 = sc.next();
+				String firstName2 = sc.nextLine();
 				ab.editPerson(firstName2);
 				break;
 			case '4':
 
 				System.out.print("Search First Name -: ");
-				String firstName3 = sc.next();
+				String firstName3 = sc.nextLine();
 				ab.deletePerson(firstName3);
 				break;
 			case '5':
 				System.out.print("Search By City -: ");
-				String city = sc.next();
+				String city = sc.nextLine();
 				ab.searchByCity(city);
 				break;
-
 			case '6':
+				System.out.print("Search By State -: ");
+				String state = sc.nextLine();
+				ab.searchByCity(state);
+				break;
+
+			case '7':
 				System.exit(0);
 			}
-			sc.close();
 
 		}
 
@@ -103,7 +107,7 @@ class Contacts {
 		System.out.println(
 				"-------------------------------------------------------------------------------------------------------------------------");
 		Scanner addInfo = new Scanner(System.in);
-	    System.out.print("Enter First Name -: ");
+		System.out.print("Enter First Name -: ");
 		String FirstName = addInfo.next();
 
 		System.out.print("Enter Last Name -: ");
@@ -135,7 +139,6 @@ class Contacts {
 		} else {
 			System.out.println("Duplicate Entry");
 		}
-		addInfo.close();
 
 	}
 
@@ -207,7 +210,7 @@ class Contacts {
 					System.exit(0);
 
 				}
-				edit.close();
+
 			}
 		}
 	}
@@ -241,6 +244,11 @@ class Contacts {
 	// Search Person By City
 	void searchByCity(String city) {
 		persons.stream().filter(y -> city.equals(y.City)).forEach(y -> y.display());
+	}
+
+	// Search Person By State
+	void searchBystate(String state) {
+		persons.stream().filter(y -> state.equals(y.State)).forEach(y -> y.display());
 	}
 
 }
