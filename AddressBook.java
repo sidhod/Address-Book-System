@@ -1,13 +1,18 @@
 package addressBookMain;
 
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class AddressBook {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 
 		Contacts ab = new Contacts();
+
 		// Welcome message in address book
 		System.out.println("" + "    ##     ## ###### ##     ###### ###### ###   ### ######\r\n"
 				+ " *  ##     ## ##     ##     ##     ##  ## ## # # ## ##      *\r\n"
@@ -15,12 +20,13 @@ public class AddressBook {
 				+ " *  ## # # ## ##     ##     ##     ##  ## ##     ## ##      *\r\n"
 				+ "    ###   ### ###### ###### ###### ###### ##     ## ###### \r\n"
 				+ "-------------------WELCOME TO ADDRESS BOOK-----------------------\r\n");
+
 		// loop for select choice
 		while (true) {
 			Scanner sc = new Scanner(System.in);
 			System.out.println("Enter Your Choice: ");
 			System.out.println(
-					"1-Add\n2-Display\n3-Edit\n4-Delete\n5-Count Person By City\n6-Count Person By State\na-Sort By Name\nb-Sort By City\nc-Sort By State\nd-Sort By Zip\n7-Exit");
+					"1-Add\n2-Display\n3-Edit\n4-Delete\n5-Count Person By City\n6-Count Person By State\na-Sort By Name\nb-Sort By City\nc-Sort By State\nd-Sort By Zip\n7-Show Contacts\n8-Exit");
 			char input = sc.nextLine().charAt(0);
 			switch (input) {
 			case '1':
@@ -29,29 +35,29 @@ public class AddressBook {
 			case '2':
 
 				System.out.print("Search First Name -: ");
-				String firstName1 = sc.nextLine();
+				String firstName1 = sc.next();
 				ab.searchPerson(firstName1);
 				break;
 			case '3':
 
 				System.out.print("Search First Name -: ");
-				String firstName2 = sc.nextLine();
+				String firstName2 = sc.next();
 				ab.editPerson(firstName2);
 				break;
 			case '4':
 
 				System.out.print("Search First Name -: ");
-				String firstName3 = sc.nextLine();
+				String firstName3 = sc.next();
 				ab.deletePerson(firstName3);
 				break;
 			case '5':
 				System.out.print("Search By City -: ");
-				String city = sc.nextLine();
+				String city = sc.next();
 				ab.searchByCity(city);
 				break;
 			case '6':
 				System.out.print("Search By State -: ");
-				String state = sc.nextLine();
+				String state = sc.next();
 				ab.searchByCity(state);
 				break;
 			case 'a':
@@ -66,13 +72,15 @@ public class AddressBook {
 			case 'd':
 				ab.sortByZip();
 				break;
-
 			case '7':
+				ab.readTextFile();
+				break;
+
+			case '8':
 				System.exit(0);
 			}
 
 		}
-
 	}
 
 }
@@ -117,7 +125,8 @@ class Contacts {
 	}
 
 	// Add person in address book
-	void addPerson() {
+	void addPerson() throws IOException {
+
 		System.out.println(
 				"-------------------------------------------------------------------------------------------------------------------------");
 		Scanner addInfo = new Scanner(System.in);
@@ -146,10 +155,14 @@ class Contacts {
 		String Email = addInfo.next();
 		PersonInfo p = new PersonInfo(FirstName, LastName, Address, City, State, Zip, PhoneNumber, Email);
 		// Check Duplicate Entry using Stream
+
 		boolean checkRepeateEntry = persons.stream().anyMatch(y -> FirstName.equals(y.FirstName));
 		if (persons.size() == 0 || checkRepeateEntry == false) {
 			System.out.println("---Contact Added---");
+
 			persons.add(p);
+			writeInTextFile();
+
 		} else {
 			System.out.println("Duplicate Entry");
 		}
@@ -296,6 +309,40 @@ class Contacts {
 
 				.sorted((p1, p2) -> Long.valueOf(p1.Zip).compareTo(Long.valueOf(p2.Zip))).collect(Collectors.toList());
 		SortByState.forEach(y -> y.display());
+	}
+
+//Write Data In Text File
+	void writeInTextFile() {
+		String path = "C:\\\\\\\\Users\\\\\\\\Dell\\\\\\\\Desktop\\\\\\\\Addressbook.txt";
+		StringBuffer addBuffer = new StringBuffer();
+		persons.forEach(contact -> {
+			addBuffer.append("[" + "First Name: " + contact.FirstName + " Last Name: " + contact.LastName + " Address: "
+					+ contact.Address + " City: " + contact.City + "  State: " + contact.State + " Zip: " + contact.Zip
+					+ " Phone No: " + contact.PhoneNumber + " Email: " + contact.Email + "]" + "\n");
+		});
+		try {
+			Files.write(Paths.get(path), addBuffer.toString().getBytes());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+//Read Data From Text File
+	void readTextFile() {
+		int dataPositionPresent;
+		String path = "C:\\\\\\\\Users\\\\\\\\Dell\\\\\\\\Desktop\\\\\\\\Addressbook.txt";
+		try {
+			FileReader fileReaderObject = new FileReader(path);
+			while ((dataPositionPresent = fileReaderObject.read()) != -1)
+				System.out.print((char) dataPositionPresent);
+			fileReaderObject.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 
 }
